@@ -6,10 +6,93 @@
     border-radius: 20px;
 }
 .sidebar-container{
-    border: 5px solid goldenrod;
     flex: 0.3;
+    display: flex;
+    flex-direction: column;
 }
 .workarea-container{
-    border: 5px solid silver;
+    color: aliceblue;
     flex:0.7;
+}
+.sb-header{
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px 5px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.sb-search{
+    background-color: white;
+    border-radius: 20px;
+    padding: 5px 5px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+
+}
+.search-box{
+    outline: 0px;
+    border: none;
+    margin:10px;
+    font-size: 1.25rem;
+
+}
+.sb-conversations{
+   
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px 5px;
+    margin: 10px;
+    flex: 1;
+}
+
+.conversation-container
+{
+    display: grid;
+
+    grid-template-columns: 32px auto auto;
+    grid-template-rows: auto auto;
+    column-gap: 12px;
+    margin: 5px;
+    padding:5px;
+    border-radius: 20px;
+}
+.con-icon{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    grid-area: 1/1/3/2;       /*to specify startcol/startrow /endcol/endrow */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d9d9d9;
+    
+    
+    color: white;
+    font-size: 2rem;
+    font-weight: bolder;
+    /*for rounding the egde*/
+    
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    justify-self: center;
+    align-self: center;
+
+}
+.con-title{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    grid-area: 1/2/2/4;
+    font-weight: bold;
+    color: rgba(0,0,0,0.54);
+}
+.con-timestamp{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    justify-self: flex-end;
+    font-size: 0.75rem;
+    color: rgba(0,0,0,0.54);
+}
+.con-message{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgba(0,0,0,0.54);
+    font-size: 0.75rem;
 }
