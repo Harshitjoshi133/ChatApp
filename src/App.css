@@ -1,0 +1,10 @@
+*{
+  margin:0px;
+}
+.App{
+  background-color: #dddedd;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

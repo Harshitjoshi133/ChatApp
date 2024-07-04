@@ -1,0 +1,15 @@
+.main-container{
+    display:flex;
+    background-color:#f8f4f6; 
+    min-width: 90vw;
+    min-height: 90vh;
+    border-radius: 20px;
+}
+.sidebar-container{
+    border: 5px solid goldenrod;
+    flex: 0.3;
+}
+.workarea-container{
+    border: 5px solid silver;
+    flex:0.7;
+}
