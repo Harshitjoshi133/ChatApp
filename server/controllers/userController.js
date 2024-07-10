@@ -47,3 +47,26 @@ module.exports.login=async (req,res,next)=>{
         return res.status(500).json({message:"Error", status:false});
     }
 };
+
+
+module.exports.setAvatar = async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+        const avatarImage = req.body.images; // Ensure this matches the key sent from the client
+        const userData = await User.findByIdAndUpdate(
+            userId,
+            {
+                isAvatarImageSet: true,
+                avatarImage,
+            },
+            { new: true }
+        );
+        if (!userData) {
+            return res.status(404).json({ message: "User not found", status: false });
+        }
+        return res.json({ isSet: userData.isAvatarImageSet, image: userData.avatarImage });
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({ message: "Error", status: false });
+    }
+};

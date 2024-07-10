@@ -9,8 +9,12 @@ import loader from '../assets/loader.gif';
 import { Buffer } from 'buffer';
 import { SetAvatarRoute } from '../utils/APIroutes'
 const SetAvatar = () => {
+    useEffect(()=>{
+        if(!localStorage.getItem("chat-app-user"));
+        navigate("/login");
+      },[])
     const api="https://api.dicebear.com/9.x/adventurer/svg?seed=";
-    const navigation=useNavigate();
+    const navigate=useNavigate();
     const [avatar,setAvatar]=useState([]);
     const[loading,isLoading]=useState(true);
     const [selectedAvatar,setSelectedAvatar]=useState(undefined);
@@ -22,9 +26,25 @@ const SetAvatar = () => {
         draggable:true,
     }
     const seed=["Cookie","Midnight","Tinkerbell","Ginger"];
-    const setProfilePicture=()=>{
+    const setProfilePicture= async ()=>{
         if(selectedAvatar===undefined){
             toast.error("Please Select the Avatar",toastifyOptions);
+        }
+        else{
+            const user = await JSON.parse(localStorage.getItem("chat-app-user"));
+            const  {data} = await axios.post(`${SetAvatarRoute}/${user._id}`,{
+                images:avatar[selectedAvatar],
+            });
+            console.log(user);
+            if(data.isSet){
+                user.isAvatarImageSet=true;
+                user.avatarImage=data.image;
+                localStorage.setItem("chat-app-user",JSON.stringify(user));
+                navigate("/");
+            }
+            else{
+                toast("Error in setting Avatar",toastifyOptions);
+            }
         }
     };
     useEffect(()=>{
