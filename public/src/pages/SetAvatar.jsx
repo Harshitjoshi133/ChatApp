@@ -6,17 +6,18 @@ import {toast,ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import loader from '../assets/loader.gif';
-import { Buffer } from 'buffer';
-import { SetAvatarRoute } from '../utils/APIroutes'
+import { SetAvatarRoute } from '../utils/APIroutes';
 const SetAvatar = () => {
-    useEffect(()=>{
-        if(!localStorage.getItem("chat-app-user"));
-        navigate("/login");
-      },[])
-    const api="https://api.dicebear.com/9.x/adventurer/svg?seed=";
     const navigate=useNavigate();
+    useEffect(()=>{
+        if(!localStorage.getItem("chat-app-user")){
+        navigate("/login");
+        }
+    },[navigate]);
+    const api="https://api.dicebear.com/9.x/adventurer/svg?seed=";
+    
     const [avatar,setAvatar]=useState([]);
-    const[loading,isLoading]=useState(true);
+    const [loading,setLoading]=useState(true);
     const [selectedAvatar,setSelectedAvatar]=useState(undefined);
     const toastifyOptions={
         position:'bottom-right',
@@ -35,8 +36,8 @@ const SetAvatar = () => {
             const  {data} = await axios.post(`${SetAvatarRoute}/${user._id}`,{
                 images:avatar[selectedAvatar],
             });
-            console.log(user);
             if(data.isSet){
+                console.log("I am here");
                 user.isAvatarImageSet=true;
                 user.avatarImage=data.image;
                 localStorage.setItem("chat-app-user",JSON.stringify(user));
@@ -52,12 +53,10 @@ const SetAvatar = () => {
             const data = [];
             for (let i = 0; i < 4; i++) {
                 const response=await axios.get(`${api}${seed[i]}`);
-
-                console.log(`${response.request.responseURL} \n`);
                 data.push(response.request.responseURL);
             }
             setAvatar(data);
-            isLoading(false);
+            setLoading(false);
         };
 
         fetchAvatars();
@@ -154,4 +153,4 @@ const Container=styled.div`
         }
     }
 `
-export default SetAvatar
+export default SetAvatar;
