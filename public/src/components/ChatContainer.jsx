@@ -1,11 +1,34 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Logout from './Logout'
 import ChatInput from './ChatInput'
-import Messages from './Messages'
+import {v4 as uuidv4} from 'uuid'; 
 import axios from 'axios'
-import { sendMessageRoute } from '../utils/APIroutes'
-const ChatContainer = ({currentChat,currentUser}) => {
+import { getAllMessageRoute, sendMessageRoute } from '../utils/APIroutes'
+const ChatContainer = ({currentChat,currentUser,socket}) => {
+    const [messages,setMessages]=useState([]);
+    const [arrivalMessage,setArrivalMessage]=useState(null);
+    const scrollRef=useRef();
+    useEffect(()=>{
+        try {
+            
+            const fetchChat=async ()=>{
+                const response = await axios.post(getAllMessageRoute,{
+                    from:currentUser._id,
+                    to:currentChat._id,
+                })
+                
+                setMessages(response.data);
+                console.log(response.data);
+            }
+            fetchChat();
+            
+            
+        } catch (error) {
+            console.log(error);
+        }
+        
+    },[currentChat])
     const handleSendMsg=async (msg)=>{
         await axios.post(sendMessageRoute,
             {
@@ -13,7 +36,30 @@ const ChatContainer = ({currentChat,currentUser}) => {
                 to:currentChat._id ,
                 message:msg,
         })
+        socket.current.emit("send-msg",{
+            from:currentUser._id,
+            to:currentChat._id ,
+            message:msg,
+        })
+        const msgs=[...messages]
+        msgs.push({fromSelf:true,message:msg})
+        setMessages(msgs);
     };
+    useEffect(()=>{
+        if(socket.current){
+            socket.current.on("msg-recive",(msg)=>{
+                setArrivalMessage({fromSelf:false,message:msg});
+            })
+        }
+    },[])
+    useEffect(()=>{
+        arrivalMessage && setMessages((prev)=>[...prev,arrivalMessage]);
+    },[arrivalMessage])
+    
+    useEffect(()=>{
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    },[messages])
+
     return (
     <>
         {currentChat && 
@@ -30,42 +76,101 @@ const ChatContainer = ({currentChat,currentUser}) => {
                 </div>
                 <Logout/>
             </div>
-            <Messages/>
+            <div className="chat-messages">
+            {messages.map((message) => (
+            <div ref={scrollRef} key={uuidv4()}>
+                <div className={`message ${message.fromSelf ? "sended" : "received"}`}>
+            <div className="content">
+                <p>{message.message}</p>
+            </div>
+            </div>
+            
+        </div>
+    ))}
+</div>
+
             <ChatInput handleSendMsg={handleSendMsg}/>
         </Container>
     )
 }
-
     </>
 
   )
 }
 
-const Container=styled.div`
+const Container = styled.div`
+    display: grid;
+    grid-template-rows: 10% 78% 12%;
+    @media screen and (min-width: 360px) and (max-width: 480px) {
+        grid-template-columns: 15% 70% 10%;
+    }
+    gap: 0.1rem;
+    overflow: hidden;
     padding-top: 1rem;
-    .chat-header{
+
+    .chat-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding:0.2rem;
-        .user-details{
+        padding: 0.2rem;
+
+        .user-details {
             display: flex;
             align-items: center;
-            gap:1rem;
-            .avatar{
-                img{
+            gap: 1rem;
+
+            .avatar {
+                img {
                     height: 3rem;
                 }
             }
-            .username{
-                h3{
+
+            .username {
+                h3 {
                     color: white;
                 }
             }
         }
-
     }
 
-`
+    .chat-messages {
+        padding: 1rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        overflow: auto;
+        .message {
+            display: flex;
+            align-items: center;
+
+            .content {
+                max-width: 40%;
+                overflow-wrap: break-word;
+                padding: 1rem;
+                border-radius: 1rem;
+                font-size: 1.1rem;
+                color: #d1d1d1;
+            }
+        }
+
+        .sended {
+            justify-content: flex-end;
+
+            .content {
+                background-color: #4f04ff21;
+            }
+        }
+
+        .received {
+            justify-content: flex-start;
+
+            .content {
+                background-color: #99ff0020;
+            }
+        }
+    }
+`;
+
+
 
 export default ChatContainer

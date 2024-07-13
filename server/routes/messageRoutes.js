@@ -2,7 +2,7 @@ const { getAllMessages, addMessages } = require("../controllers/messageControlle
 
 const router=require("express").Router();
 
-router.post("/getmsg",getAllMessages);
+router.post("/getmsg/",getAllMessages);
 router.post("/addmsg/",addMessages);
 
 module.exports=router;

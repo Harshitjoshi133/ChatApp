@@ -90,7 +90,7 @@ const Container=styled.div`
         border-radius: 2rem;
         input{
             width: 90%;
-            height: 70%;
+           // height: 70%;
             color: white;
             padding-left: 1rem;
             border: none;
