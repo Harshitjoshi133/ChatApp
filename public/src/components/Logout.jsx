@@ -7,8 +7,8 @@ const Logout = () => {
     const navigate = useNavigate();
     
     const handleClickListener = async () => {
-      localStorage.clear();
-      navigate("/login");
+        localStorage.clear();
+        navigate("/login");
   };
   
 
