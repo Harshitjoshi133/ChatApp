@@ -79,17 +79,15 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
                 <Logout/>
             </div>
             <div className="chat-messages">
-            {messages.map((message) => (
-            <div ref={scrollRef} key={uuidv4()}>
-                <div className={`message ${message.fromSelf ? "sended" : "received"}`}>
-            <div className="content">
-                <p>{message.message}</p>
-            </div>
-            </div>
-            
-        </div>
-    ))}
-</div>
+                        {messages.map((message) => (
+                            <div key={uuidv4()} className={`message ${message.fromSelf ? "sended" : "received"}`}>
+                                <div className="content">
+                                    <p>{message.message}</p>
+                                </div>
+                            </div>
+                        ))}
+                        <div ref={scrollRef} />
+                    </div>
 
             <ChatInput handleSendMsg={handleSendMsg}/>
         </Container>
@@ -107,7 +105,7 @@ const Container = styled.div`
         grid-template-columns: 15% 70% 10%;
     }
     gap: 0.1rem;
-    overflow: hidden;
+    overflow:hidden;
     padding-top: 1rem;
 
     .chat-header {
@@ -141,12 +139,20 @@ const Container = styled.div`
         flex-direction: column;
         gap: 1rem;
         overflow: auto;
+        &::-webkit-scrollbar {
+      width: 0.2rem;
+      &-thumb {
+        background-color: #ffffff39;
+        width: 0.1rem;
+        border-radius: 1rem;
+      }
+    }
         .message {
             display: flex;
             align-items: center;
-
+            min-height: 3.5rem;
             .content {
-                max-width: 40%;
+                min-width: 40%;
                 overflow-wrap: break-word;
                 padding: 1rem;
                 border-radius: 1rem;

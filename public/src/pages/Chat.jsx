@@ -98,6 +98,7 @@ const Container =styled.div`
     width:85vw;
     background-color: #00000076;
     display:grid;
+    overflow:auto;
     grid-template-columns: 25% 75%;
     @media screen and (min-width: 360px) and (max-width:480px){
       grid-template-columns: 40% 60%;
