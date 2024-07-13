@@ -9,7 +9,6 @@ import { loginRoute } from '../utils/APIroutes'
 const login = () => {
   const navigate=useNavigate();
   useEffect(()=>{
-    const loggedin = async()=>{}
     if(localStorage.getItem("chat-app-user")){
       navigate("/");
     }
