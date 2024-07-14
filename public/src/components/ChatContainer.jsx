@@ -19,6 +19,7 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
                 })
                 
                 setMessages(response.data);
+                console.log(response.data);
             }
             if(currentChat){
             fetchChat();
@@ -42,15 +43,13 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
             to:currentChat._id ,
             message:msg,
         })
-    
         const msgs=[...messages]
         msgs.push({fromSelf:true,message:msg})
         setMessages(msgs);
     };
     useEffect(()=>{
         if(socket.current){
-            console.log(socket.current);
-            socket.current.on("msg-recieve",(msg)=>{
+            socket.current.on("msg-recive",(msg)=>{
                 setArrivalMessage({fromSelf:false,message:msg});
             })
         }
