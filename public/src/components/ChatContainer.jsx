@@ -20,7 +20,6 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
                 
                 setMessages(response.data);
                 console.log(response.data);
-                console.log(response.data);
             }
             if(currentChat){
             fetchChat();
