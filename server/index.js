@@ -6,11 +6,11 @@ const userRoutes=require("./routes/userRoute")
 const messageRoutes=require("./routes/messageRoutes")
 require("dotenv").config();
 
-const Url= "https://chatapi-kibkpfyfv-harshit-joshis-projects-4fdd29bd.vercel.app/"
+const Url= "https://chatapi-mauve-iota.vercel.app/"
 const app=express();
 
 app.use(cors({
-    origin:{Url},
+    origin:["https://chatapi-mauve-iota.vercel.app/"],
     methods:["Post","GET"],
     credentials:true,
 }));
