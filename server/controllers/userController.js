@@ -1,6 +1,6 @@
 const { json } = require("express");
 const User =require("../models/userModel");
-const bcrypt=require("bcrypt");
+const bcrypt=require("bcryptjs");
 
 module.exports.register=async (req,res,next)=>{
     try {
