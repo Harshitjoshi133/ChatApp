@@ -27,7 +27,7 @@ const server = app.listen(process.env.PORT,()=>{
 })
 
 const io=socket(server,{
-    cors:"http://localhost:5173/",
+    cors:"http://localhost:5173",
     credentials:true,
 })
 
@@ -36,12 +36,12 @@ global.onlineUsers=new Map();
 io.on("connection",(socket)=>{
     global.chatSocket=socket;
     socket.on("add-users",(userId)=>{
-        onlineUsers.set(userId,socketId);
+        onlineUsers.set(userId,socket.id);
     })
     socket.on("send-msg",(data)=>{
         const sendUserSocket=onlineUsers.get(data.to);
         if(sendUserSocket){
-            socket.to(sendUserSocket).emit("msg-recive",data.message);
+            socket.to(sendUserSocket).emit("msg-recieve",data.message);
         }
     })
 })
