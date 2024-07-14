@@ -1,6 +1,6 @@
 const { json } = require("express");
 const User =require("../models/userModel");
-const bcrypt=require("bcryptjs");
+//const bcrypt=require("bcryptjs");
 
 module.exports.register=async (req,res,next)=>{
     try {
@@ -13,11 +13,11 @@ module.exports.register=async (req,res,next)=>{
         if(emailCheck){
             return res.json({msg:"User already Exists",status:false});
         }
-        const hashPassword=await bcrypt.hash(password,10);
+      //  const hashPassword=await bcrypt.hash(password,10);
         const user=await User.create({
             username,
             email,
-            password:hashPassword,
+            password:password,
         })
         delete user.password;
         return res.json({user,status:true});
@@ -35,7 +35,7 @@ module.exports.login=async (req,res,next)=>{
             return res.json({msg:"Incorrect Username or Password",status:false});
         }
         console.log(`${user} is found`);
-        const passwordValid= await (bcrypt.compare(password,user.password));
+        const passwordValid= await password===user.password;
         if(!passwordValid){
             return res.json({msg:"Incorrect Username or Password",status:false});
         }
