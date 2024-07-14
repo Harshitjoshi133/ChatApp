@@ -19,7 +19,6 @@ module.exports.register=async (req,res,next)=>{
             email,
             password:hashPassword,
         })
-        console.log(`${user} and ${User.findOne({username})}`);
         delete user.password;
         return res.json({user,status:true});
     } catch (error) {

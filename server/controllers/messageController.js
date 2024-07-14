@@ -19,7 +19,6 @@ module.exports.addMessages= async (req,res,next)=>{
 module.exports.getAllMessages= async (req,res,next)=>{
     try {
         const {to,from} = req.body;
-        console.log(`to :${to} and from ${from}`);
         const messages=await messageModel.find({
             users: {
                 $all: [to, from],
@@ -31,7 +30,6 @@ module.exports.getAllMessages= async (req,res,next)=>{
                 message:msg.message.text,
             };
         })
-        console.log(projectMessages);
         return res.json(projectMessages);
     } catch (error) {
         console.log(error)
