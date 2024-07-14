@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Picker from 'emoji-picker-react'
-import { BsEmojiSmileFill } from 'react-icons/bs';
 import {IoMdSend} from 'react-icons/io';
 import zIndex from '@mui/material/styles/zIndex';
 const ChatInput = ({handleSendMsg}) => {
-    const[showEmojiPicker,setShowEmojiPicker]=useState(false);
+    //const[showEmojiPicker,setShowEmojiPicker]=useState(false);
     const[msg,setMsg]=useState("");
-    const hideOrShowEmojiPicker=()=>{
-        setShowEmojiPicker(!showEmojiPicker);
-    }
-    const handleEmojiClick=(event,emoji)=>{
-        let message=msg;
-        message+=emoji.emoji;
-        setMsg(message);
+    // const hideOrShowEmojiPicker=()=>{
+    //     setShowEmojiPicker(!showEmojiPicker);
+    // }
+    // const handleEmojiClick=(event,emoji)=>{
+    //     let message=msg;
+    //     message+=emoji.emoji;
+    //     setMsg(message);
 
-    }
+    // }
     const sendChat=(event)=>{
         event.preventDefault();
         if(msg.length>0){
