@@ -30,7 +30,7 @@ This is a real-time chat application built using the MERN stack (MongoDB, Expres
 - **Frontend:** React, Redux, Axios, Socket.io-client, Toastify, Styled Components, MUI Icons
 - **Backend:** Node.js, Express, Socket.io
 - **Database:** MongoDB, Mongoose
-- **Authentication:** JWT (JSON Web Tokens)
+- **Authentication:** On Server
 - **Styling:** CSS, Bootstrap, Styled Components
 
 ## Installation
