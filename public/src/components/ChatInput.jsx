@@ -10,8 +10,7 @@ const ChatInput = ({handleSendMsg}) => {
             handleSendMsg(msg);
             setMsg('');
         }
-       
-    }
+   }
   return (
     <Container>
         <form className='input-container' onSubmit={(e)=>sendChat(e)}>

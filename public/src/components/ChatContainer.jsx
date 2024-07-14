@@ -49,7 +49,7 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
     };
     useEffect(()=>{
         if(socket.current){
-            socket.current.on("msg-recive",(msg)=>{
+            socket.current.on("msg-recieve",(msg)=>{
                 setArrivalMessage({fromSelf:false,message:msg});
             })
         }
