@@ -9,15 +9,15 @@ require("dotenv").config();
 const Url= "https://chatapi-mauve-iota.vercel.app/"
 const app=express();
 
-app.use(cors({
-    origin:["https://chatapi-mauve-iota.vercel.app/"],
-    methods:["Post","GET"],
+const corsConfig={
+    origin:"*",
+    methods:["GET","POST","PUT","DELETE","UPDATE"],
     credentials:true,
-}));
+}
 
-app.get("/",(req,res)=>{
-    res.json("Helllo broski");
-})
+app.use(cors(corsConfig));
+app.options("",cors(corsConfig));
+
 
 app.use(express.json())
 
