@@ -6,9 +6,16 @@ const userRoutes=require("./routes/userRoute")
 const messageRoutes=require("./routes/messageRoutes")
 require("dotenv").config();
 
+const Url= "https://chatapi-kibkpfyfv-harshit-joshis-projects-4fdd29bd.vercel.app/"
 const app=express();
 
-app.use(cors());
+app.use(cors({
+    origin:{Url},
+    methods:["Post","GET"],
+    credentials:true,
+}));
+
+
 
 app.use(express.json())
 
@@ -19,7 +26,6 @@ const mongoURI=process.env.MONGO_URL;
 mongoose.connect(mongoURI, { })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
-
 
 
 const server = app.listen(process.env.PORT,()=>{
