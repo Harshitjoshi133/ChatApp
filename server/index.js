@@ -9,7 +9,7 @@ require('dotenv').config();
 const app = express();
 
 const corsConfig = {
-  origin: 'https://chat-1s8vfj96f-harshit-joshis-projects-4fdd29bd.vercel.app', // Update with your frontend URL
+  origin: 'https://chat-app-harshit-joshis-projects-4fdd29bd.vercel.app', // Update with your frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
 };
