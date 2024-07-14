@@ -15,7 +15,9 @@ app.use(cors({
     credentials:true,
 }));
 
-
+app.get("/",(req,res)=>{
+    res.json("Helllo broski");
+})
 
 app.use(express.json())
 
