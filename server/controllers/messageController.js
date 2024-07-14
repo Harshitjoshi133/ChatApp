@@ -4,10 +4,11 @@ module.exports.addMessages= async (req,res,next)=>{
         const {from,to,message}=req.body;
         const data= await messageModel.create({
             message:{text:message},
-            user:[to,from],
+            users:[to,from],
             sender:from,
         }
         );
+        console.log(data.users.toString());
         if(data) return res.json({message:"Success"});
         return res.json({message:"failure"})
     } catch (error) {
@@ -18,8 +19,12 @@ module.exports.addMessages= async (req,res,next)=>{
 module.exports.getAllMessages= async (req,res,next)=>{
     try {
         const {to,from} = req.body;
-        const messages=await messageModel.find().sort({updatedAt:1});
-        console.log(messages);
+        console.log(`to :${to} and from ${from}`);
+        const messages=await messageModel.find({
+            users: {
+                $all: [to, from],
+            },
+    }).sort({updatedAt:1});
         const projectMessages=messages.map((msg)=>{
             return{
                 fromSelf:msg.sender.toString()==from,
