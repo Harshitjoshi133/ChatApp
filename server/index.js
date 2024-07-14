@@ -1,55 +1,54 @@
-const express=require('express');
-const cors=require("cors");
-const mongoose=require("mongoose");
-const socket=require("socket.io");
-const userRoutes=require("./routes/userRoute")
-const messageRoutes=require("./routes/messageRoutes")
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const socket = require('socket.io');
+const userRoutes = require('./routes/userRoute');
+const messageRoutes = require('./routes/messageRoutes');
+require('dotenv').config();
 
-const Url= "https://chatapi-mauve-iota.vercel.app/"
-const app=express();
+const app = express();
 
-const corsConfig={
-    origin:"*",
-    methods:["GET","POST","PUT","DELETE","UPDATE"],
-    credentials:true,
-}
+const corsConfig = {
+  origin: 'https://chat-1s8vfj96f-harshit-joshis-projects-4fdd29bd.vercel.app', // Update with your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+};
 
 app.use(cors(corsConfig));
-app.options("",cors(corsConfig));
+app.options('*', cors(corsConfig)); // Handle preflight requests for all routes
 
+app.use(express.json());
 
-app.use(express.json())
+app.use('/api/auth', userRoutes);
+app.use('/api/messages', messageRoutes);
 
-app.use("/api/auth",userRoutes);
-app.use("/api/messages",messageRoutes);
+const mongoURI = process.env.MONGO_URL;
+mongoose.connect(mongoURI, {})
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
 
-const mongoURI=process.env.MONGO_URL;
-mongoose.connect(mongoURI, { })
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+const server = app.listen(process.env.PORT, () => {
+  console.log(`Listening on PORT ${process.env.PORT}`);
+});
 
+const io = socket(server, {
+  cors: {
+    origin: 'https://chat-1s8vfj96f-harshit-joshis-projects-4fdd29bd.vercel.app', // Update with your frontend URL
+    credentials: true,
+  },
+});
 
-const server = app.listen(process.env.PORT,()=>{
-    console.log(`Listening on PORT ${process.env.PORT}`)
-})
+global.onlineUsers = new Map();
 
-
-const io=socket(server,{
-    cors:"http://localhost:5173",
-    credentials:true,
-})
-global.onlineUsers=new Map();
-
-io.on("connection",(socket)=>{
-    global.chatSocket=socket;
-    socket.on("add-users",(userId)=>{
-    onlineUsers.set(userId,socket.id);
-})
-socket.on("send-msg",(data)=>{
-    const sendUserSocket=onlineUsers.get(data.to);
-    if(sendUserSocket){
-        socket.to(sendUserSocket).emit("msg-recieve",data.message);
+io.on('connection', (socket) => {
+  global.chatSocket = socket;
+  socket.on('add-users', (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+  socket.on('send-msg', (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit('msg-recieve', data.message);
     }
-})
-})
+  });
+});
