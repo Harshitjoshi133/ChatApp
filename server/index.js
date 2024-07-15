@@ -8,10 +8,8 @@ require('dotenv').config();
 
 const app = express();
 
-import cors from 'cors';
-
 const corsOptions = {
-   origin: 'https://chat-app-tan-six-70.vercel.app',
+   origin: 'http://localhost:5173',
    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
    credentials: true,
    optionsSuccessStatus: 204,
@@ -24,10 +22,6 @@ app.use(express.json());
 app.use('/api/auth', userRoutes);
 app.use('/api/messages', messageRoutes);
 
-app.get('/', (req, res) => {
-    res.send('Express Vercel App');
-});
-
 const mongoURI = process.env.MONGO_URL;
 mongoose.connect(mongoURI, {})
     .then(() => console.log('MongoDB connected'))
@@ -39,7 +33,7 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socket(server, {
     cors: {
-        origin: 'https://chat-app-tan-six-70.vercel.app', // Update with your frontend origin
+        origin: 'http://localhost:5173', // Update with your frontend origin
         credentials: true,
         optionSuccessStatus:200,
     }
