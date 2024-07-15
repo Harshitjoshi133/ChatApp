@@ -8,10 +8,16 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors({
-    origin: 'https://chat-app-tan-six-70.vercel.app', // Update with your frontend origin
-    credentials: true
-}));
+import cors from 'cors';
+
+const corsOptions = {
+   origin: 'https://chat-app-tan-six-70.vercel.app',
+   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+   credentials: true,
+   optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -34,7 +40,8 @@ const server = app.listen(process.env.PORT, () => {
 const io = socket(server, {
     cors: {
         origin: 'https://chat-app-tan-six-70.vercel.app', // Update with your frontend origin
-        credentials: true
+        credentials: true,
+        optionSuccessStatus:200,
     }
 });
 
