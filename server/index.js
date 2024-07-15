@@ -15,6 +15,10 @@ app.use(express.json())
 app.use("/api/auth",userRoutes);
 app.use("/api/messages",messageRoutes);
 
+app.get("/",(req,res)=>{
+    res.send("Express Vercel App");
+})
+
 const mongoURI=process.env.MONGO_URL;
 mongoose.connect(mongoURI, { })
     .then(() => console.log('MongoDB connected'))
