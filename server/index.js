@@ -24,9 +24,10 @@ app.use(express.json());
 app.use('/api/auth', userRoutes);
 app.use('/api/messages', messageRoutes);
 
-app.get('/', (req, res) => {
-    res.send("GET Request Called")
+app.post('/api/auth/login', (req, res) => {
+    res.send("Post Request Called")
 })
+
 const mongoURI = process.env.MONGO_URL;
 mongoose.connect(mongoURI, {})
     .then(() => console.log('MongoDB connected'))
