@@ -38,6 +38,7 @@ const io = socket(server, {
         origin: 'https://chat-app-tan-six-70.vercel.app', // Update with your frontend origin
         credentials: true,
         transports: ['websocket', 'polling'],
+        allowedHeaders: ['Content-Type'],
         optionSuccessStatus:200,
     },
     allowEIO3: true
@@ -47,13 +48,23 @@ global.onlineUsers = new Map();
 
 io.on('connection', (socket) => {
     global.chatSocket = socket;
+    console.log(`A user is on the socket ${socket.id}`);
     socket.on('add-users', (userId) => {
+
         onlineUsers.set(userId, socket.id);
+        console.log(`the user id is set${userId}`);
     });
     socket.on('send-msg', (data) => {
         const sendUserSocket = onlineUsers.get(data.to);
+
         if (sendUserSocket) {
             socket.to(sendUserSocket).emit('msg-recieve', data.message);
+
+            console.log(`data is send from ${data.from} to ${data.to}`);
         }
+    });
+    socket.on('disconnect', () => {
+        console.log('A user disconnected:', socket.id);
+        // Handle user disconnection logic if needed
     });
 });
