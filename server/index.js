@@ -7,7 +7,7 @@ const messageRoutes = require('./routes/messageRoutes');
 require('dotenv').config();
 
 const app = express();
-const PORT=process.env.PORT || 5500;
+const PORT=process.env.PORT;
 
 
 const corsOptions = {
@@ -23,10 +23,6 @@ app.use(express.json());
 
 app.use('/api/auth', userRoutes);
 app.use('/api/messages', messageRoutes);
-
-app.post('/api/auth/login', (req, res) => {
-    res.send("Post Request Called")
-})
 
 const mongoURI = process.env.MONGO_URL;
 mongoose.connect(mongoURI, {})
