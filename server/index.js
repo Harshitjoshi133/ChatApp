@@ -7,9 +7,11 @@ const messageRoutes = require('./routes/messageRoutes');
 require('dotenv').config();
 
 const app = express();
+const PORT=process.env.PORT || 5500;
+
 
 const corsOptions = {
-   origin: 'http://localhost:5173',
+   origin: '*',
    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
    credentials: true,
    optionsSuccessStatus: 204,
@@ -27,13 +29,13 @@ mongoose.connect(mongoURI, {})
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
 
-const server = app.listen(process.env.PORT, () => {
-    console.log(`Listening on PORT ${process.env.PORT}`);
+const server = app.listen(PORT, () => {
+    console.log(`Listening on PORT ${PORT}`);
 });
 
 const io = socket(server, {
     cors: {
-        origin: 'http://localhost:5173', // Update with your frontend origin
+        origin: '*', // Update with your frontend origin
         credentials: true,
         optionSuccessStatus:200,
     }
