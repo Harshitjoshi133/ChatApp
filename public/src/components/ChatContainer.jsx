@@ -31,29 +31,39 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
         
     },[currentChat])
     const handleSendMsg=async (msg)=>{
-        await axios.post(sendMessageRoute,
-            {
+        try {
+            await axios.post(sendMessageRoute,
+                {
+                    from:currentUser._id,
+                    to:currentChat._id ,
+                    message:msg,
+            })
+            socket.current.emit("send-msg",{
                 from:currentUser._id,
                 to:currentChat._id ,
                 message:msg,
-        })
-        socket.current.emit("send-msg",{
-            from:currentUser._id,
-            to:currentChat._id ,
-            message:msg,
-        })
-    
-        const msgs=[...messages]
-        msgs.push({fromSelf:true,message:msg})
-        setMessages(msgs);
+            })
+        
+            const msgs=[...messages]
+            msgs.push({fromSelf:true,message:msg})
+            setMessages(msgs);
+        } catch (error) {
+            console.log(error);
+        }
+       
     };
     useEffect(()=>{
-        if(socket.current){
-            console.log(socket.current);
-            socket.current.on("msg-recieve",(msg)=>{
-                setArrivalMessage({fromSelf:false,message:msg});
-            })
+        try {
+            if(socket.current){
+                console.log(socket.current);
+                socket.current.on("msg-recieve",(msg)=>{
+                    setArrivalMessage({fromSelf:false,message:msg});
+                })
+            }
+        } catch (error) {
+            console.log(error);
         }
+        
     },[])
     useEffect(()=>{
         arrivalMessage && setMessages((prev)=>[...prev,arrivalMessage]);

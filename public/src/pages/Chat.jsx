@@ -29,10 +29,16 @@ const Chat = () => {
   },[navigate])
   
   useEffect(()=>{
-    if(currentUser){
-      socket.current=io(host);
-      socket.current.emit("add-users",currentUser._id);
+    try {
+      if(currentUser){
+        console.log("Here Hjere");
+        socket.current=io(host);
+        socket.current.emit("add-users",currentUser._id);
+      }
+    } catch (error) {
+      console.error(error);
     }
+    
   }
   ,[currentUser])
   
