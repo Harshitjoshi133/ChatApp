@@ -32,7 +32,9 @@ const Chat = () => {
     try {
       if(currentUser){
         console.log("Here Hjere");
-        socket.current=io(host);
+        socket.current=io(host,{
+          withCredentials:true,
+        });
         socket.current.emit("add-users",currentUser._id);
       }
     } catch (error) {
