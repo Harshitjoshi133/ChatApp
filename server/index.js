@@ -11,13 +11,15 @@ const PORT=process.env.PORT;
 
 
 const corsOptions = {
-   origin: '*',
-   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-   credentials: true,
-   optionsSuccessStatus: 200,
-};
-
-app.use(cors(corsOptions));
+    origin: '*', // This allows all origins. For production, you should specify your frontend URL here.
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'], // Add any other headers you need to allow
+    optionsSuccessStatus: 200,
+ };
+ 
+ app.use(cors(corsOptions));
+ 
 
 app.use(express.json());
 
@@ -38,11 +40,12 @@ const io = socket(server, {
         origin: '*', // Update with your frontend origin
         credentials: true,
         transports: ['websocket', 'polling'],
-        allowedHeaders: ['Content-Type'],
-        optionSuccessStatus:200,
+        allowedHeaders: ['Content-Type', 'Authorization'], // Add any other headers you need to allow
+        optionsSuccessStatus: 200,
     },
-    allowEIO3: true
+    allowEIO3: true,
 });
+
 
 global.onlineUsers = new Map();
 
