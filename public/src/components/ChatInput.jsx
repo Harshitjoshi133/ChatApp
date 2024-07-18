@@ -14,7 +14,7 @@ const ChatInput = ({handleSendMsg}) => {
   return (
     <Container>
         <form className='input-container' onSubmit={(e)=>sendChat(e)}>
-            <input type="text" placeholder='type your message here' value={msg} onChange={(e)=>setMsg(e.target.value)}/>
+            <input type="text" placeholder='type your message here' value={msg} onChange={(e)=>setMsg(e.target.value)} autoComplete='true'/>
             <button className='submit'>
                 <IoMdSend/>
             </button>
