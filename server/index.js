@@ -35,7 +35,7 @@ const server = app.listen(PORT, () => {
 
 const io = socket(server, {
     cors: {
-        origin: 'https://chat-app-tan-six-70.vercel.app', // Update with your frontend origin
+        origin: '*', // Update with your frontend origin
         credentials: true,
         transports: ['websocket', 'polling'],
         allowedHeaders: ['Content-Type'],
