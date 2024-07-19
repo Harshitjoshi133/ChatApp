@@ -31,15 +31,15 @@ const Chat = () => {
   useEffect(()=>{
     try {
       if(currentUser){
-        console.log("Here Hjere");
         socket.current=io(host,{
+          origin:"*",
           withCredentials:true,
           transports: ['websocket', 'polling','flashsocket'],
         });
         socket.current.emit("add-users",currentUser._id);
       }
     } catch (error) {
-      console.error(error);
+      console.log(`Error is ${error}`);
     }
     
   }
