@@ -34,6 +34,7 @@ const Chat = () => {
         console.log("Here Hjere");
         socket.current=io(host,{
           withCredentials:true,
+          transports: ['websocket', 'polling','flashsocket'],
         });
         socket.current.emit("add-users",currentUser._id);
       }

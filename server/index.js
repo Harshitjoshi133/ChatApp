@@ -66,8 +66,4 @@ io.on('connection', (socket) => {
             console.log(`data is send from ${data.from} to ${data.to}`);
         }
     });
-    socket.on('disconnect', () => {
-        console.log('A user disconnected:', socket.id);
-        // Handle user disconnection logic if needed
-    });
 });
