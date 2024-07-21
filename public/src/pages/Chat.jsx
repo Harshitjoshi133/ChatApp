@@ -30,12 +30,14 @@ const Chat = () => {
   
   useEffect(()=>{
     try {
+      console.log(currentUser);
       if(currentUser){
         socket.current=io(host,{
           origin:"*",
           withCredentials:true,
           transports: ['websocket', 'polling','flashsocket'],
         });
+        console.log(`web sockets ${socket.current}`);
         socket.current.emit("add-users",currentUser._id);
       }
     } catch (error) {
