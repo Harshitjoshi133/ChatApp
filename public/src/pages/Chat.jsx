@@ -8,6 +8,7 @@ import Welcome from '../components/Welcome'
 import ChatContainer from '../components/ChatContainer'
 import {io} from "socket.io-client"
 const Chat = () => {
+  const local="http://localhost:5000"
   const socket=useRef();
   const navigate=useNavigate();
   const [contacts,setContacts]=useState([]);
@@ -32,7 +33,7 @@ const Chat = () => {
     try {
       console.log(currentUser);
       if(currentUser){
-        socket.current=io(host,{
+        socket.current=io(local,{
           origin:"*",
           withCredentials:true,
           transports: ['websocket', 'polling','flashsocket'],

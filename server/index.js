@@ -37,9 +37,8 @@ const server = app.listen(PORT, () => {
 
 const io = socket(server, {
     cors: {
-        origin: 'https://chat-app-tan-six-70.vercel.app/', // Update with your frontend origin
+        origin: 'https://chat-app-tan-six-70.vercel.app', // Update with your frontend origin
         credentials: true,
-        
         allowedHeaders: ['Content-Type', 'Authorization'],
         optionsSuccessStatus: 200,
     },
@@ -54,7 +53,6 @@ io.on('connection', (socket) => {
     global.chatSocket = socket;
     console.log(`A user is on the socket ${socket.id}`);
     socket.on('add-users', (userId) => {
-
         onlineUsers.set(userId, socket.id);
         console.log(`the user id is set${userId}`);
     });

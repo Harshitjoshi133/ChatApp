@@ -8,6 +8,7 @@ import { getAllMessageRoute, sendMessageRoute } from '../utils/APIroutes';
 import {io} from "socket.io-client"
 import { host } from '../utils/APIroutes';
 const ChatContainer = ({currentChat,currentUser,socket}) => {
+    const local="http://localhost:5000"
     const [messages,setMessages]=useState([]);
     const [arrivalMessage,setArrivalMessage]=useState(null);
     const scrollRef=useRef();
@@ -57,11 +58,6 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
     useEffect(()=>{
 
         try {
-            socket.current=io(host,{
-                origin:"*",
-                withCredentials:true,
-                transports: ['websocket', 'polling','flashsocket'],
-            });
             if(socket.current){
                 socket.current.on("msg-recieve",(msg)=>{
                     setArrivalMessage({fromSelf:false,message:msg});
