@@ -8,7 +8,7 @@ import { getAllMessageRoute, sendMessageRoute } from '../utils/APIroutes';
 import {io} from "socket.io-client"
 import { host } from '../utils/APIroutes';
 const ChatContainer = ({currentChat,currentUser,socket}) => {
-    const local="http://localhost:5000"
+    //const local="http://localhost:5000"
     const [messages,setMessages]=useState([]);
     const [arrivalMessage,setArrivalMessage]=useState(null);
     const scrollRef=useRef();

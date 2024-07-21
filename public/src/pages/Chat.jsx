@@ -33,7 +33,7 @@ const Chat = () => {
     try {
       console.log(currentUser);
       if(currentUser){
-        socket.current=io(local,{
+        socket.current=io(host,{
           origin:"*",
           withCredentials:true,
           transports: ['websocket', 'polling','flashsocket'],
