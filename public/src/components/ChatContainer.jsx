@@ -3,8 +3,10 @@ import styled from 'styled-components'
 import Logout from './Logout'
 import ChatInput from './ChatInput'
 import {v4 as uuidv4} from 'uuid'; 
-import axios from 'axios'
-import { getAllMessageRoute, sendMessageRoute } from '../utils/APIroutes'
+import axios from 'axios';
+import { getAllMessageRoute, sendMessageRoute } from '../utils/APIroutes';
+import {io} from "socket.io-client"
+import { host } from '../utils/APIroutes';
 const ChatContainer = ({currentChat,currentUser,socket}) => {
     const [messages,setMessages]=useState([]);
     const [arrivalMessage,setArrivalMessage]=useState(null);
@@ -53,13 +55,21 @@ const ChatContainer = ({currentChat,currentUser,socket}) => {
        
     };
     useEffect(()=>{
+
         try {
+            socket.current=io(host,{
+                origin:"*",
+                withCredentials:true,
+                transports: ['websocket', 'polling','flashsocket'],
+            });
             if(socket.current){
-                
                 socket.current.on("msg-recieve",(msg)=>{
                     setArrivalMessage({fromSelf:false,message:msg});
                 })
                 console.log(socket.current);
+            }
+            else{
+                console.log(`no sockets for you`);
             }
         } catch (error) {
             console.log(error);

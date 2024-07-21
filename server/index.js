@@ -39,10 +39,11 @@ const io = socket(server, {
     cors: {
         origin: 'https://chat-app-tan-six-70.vercel.app/', // Update with your frontend origin
         credentials: true,
-        transports: ['websocket', 'polling'],
+        
         allowedHeaders: ['Content-Type', 'Authorization'],
         optionsSuccessStatus: 200,
     },
+    transports: ['websocket', 'polling'],
     allowEIO3: true,
 });
 
