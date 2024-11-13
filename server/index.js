@@ -37,7 +37,7 @@ const server = app.listen(PORT, () => {
 
 const io = socket(server, {
     cors: {
-        origin: 'https://chat-app-tan-six-70.vercel.app', // Update with your frontend origin
+        origin: 'https://chatapp-b6pu.onrender.com', // Update with your frontend origin
         credentials: true,
         allowedHeaders: ['Content-Type', 'Authorization'],
         optionsSuccessStatus: 200,
