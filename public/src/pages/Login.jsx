@@ -5,7 +5,9 @@ import {styled} from 'styled-components'
 import {toast,ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { loginRoute } from '../utils/APIroutes'
+import { loginRoute } from '../utils/APIroutes';
+import Logo from '../assets/logo.svg';
+
 const login = () => {
   const navigate=useNavigate();
   useEffect(()=>{
@@ -67,7 +69,7 @@ const login = () => {
       <FormContainer>
         <form onSubmit={(event)=>handleSubmit(event)}>
           <div className="brandName">
-            <img src="\src\assets\logo.svg" alt="Logo" />
+            <img src={Logo} alt="Logo" />
             <h1>ChatApp</h1>
           </div>
           <input
